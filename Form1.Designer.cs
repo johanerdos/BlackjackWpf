@@ -37,6 +37,8 @@
             this.button6 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.resultLable = new System.Windows.Forms.Label();
+            this.betLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button1
@@ -122,11 +124,31 @@
             this.label2.TabIndex = 7;
             this.label2.Text = "label2";
             // 
+            // resultLable
+            // 
+            this.resultLable.AutoSize = true;
+            this.resultLable.Location = new System.Drawing.Point(415, 24);
+            this.resultLable.Name = "resultLable";
+            this.resultLable.Size = new System.Drawing.Size(35, 13);
+            this.resultLable.TabIndex = 8;
+            this.resultLable.Text = "label3";
+            // 
+            // betLabel
+            // 
+            this.betLabel.AutoSize = true;
+            this.betLabel.Location = new System.Drawing.Point(704, 230);
+            this.betLabel.Name = "betLabel";
+            this.betLabel.Size = new System.Drawing.Size(35, 13);
+            this.betLabel.TabIndex = 9;
+            this.betLabel.Text = "label3";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(965, 450);
+            this.Controls.Add(this.betLabel);
+            this.Controls.Add(this.resultLable);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button6);
@@ -153,6 +175,8 @@
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label resultLable;
+        private System.Windows.Forms.Label betLabel;
     }
 }
 
