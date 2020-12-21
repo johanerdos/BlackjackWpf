@@ -39,11 +39,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.resultLable = new System.Windows.Forms.Label();
             this.betLabel = new System.Windows.Forms.Label();
+            this.walletLbl = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(430, 415);
+            this.button1.Location = new System.Drawing.Point(427, 415);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(164, 23);
             this.button1.TabIndex = 0;
@@ -142,11 +143,21 @@
             this.betLabel.TabIndex = 9;
             this.betLabel.Text = "label3";
             // 
+            // walletLbl
+            // 
+            this.walletLbl.AutoSize = true;
+            this.walletLbl.Location = new System.Drawing.Point(794, 230);
+            this.walletLbl.Name = "walletLbl";
+            this.walletLbl.Size = new System.Drawing.Size(35, 13);
+            this.walletLbl.TabIndex = 10;
+            this.walletLbl.Text = "label4";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(965, 450);
+            this.Controls.Add(this.walletLbl);
             this.Controls.Add(this.betLabel);
             this.Controls.Add(this.resultLable);
             this.Controls.Add(this.label2);
@@ -177,6 +188,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label resultLable;
         private System.Windows.Forms.Label betLabel;
+        private System.Windows.Forms.Label walletLbl;
     }
 }
 

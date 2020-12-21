@@ -13,8 +13,6 @@ namespace BlackjackWpf.Model
         
         private string _suit;
 
-        
-       
 
         public Card(string _rank, int _value, string _suit)
         {
@@ -47,18 +45,19 @@ namespace BlackjackWpf.Model
 
         public Card PrintCard()
         {
+            Random rand = new Random();
             string[] rank = new string[] { "A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2" };
             string[] suits = new string[] { "H", "C", "D", "S" };
-            int value = 0;
 
-            Random rand = new Random();
+            
             int indexRank = rand.Next(0, rank.Length);
             int indexSuit = rand.Next(0, suits.Length);
 
             string r = rank[indexRank];
             string s = suits[indexSuit];
 
-            if(r.Equals("A") || r.Equals("K") || r.Equals("Q") || r.Equals("J"))
+            int value = 0;
+            if (r.Equals("A") || r.Equals("K") || r.Equals("Q") || r.Equals("J"))
             {
                 value = ConvertRank(r);
             }
