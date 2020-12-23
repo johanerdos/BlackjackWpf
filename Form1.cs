@@ -11,7 +11,7 @@ namespace BlackjackWpf
     public partial class Form1 : Form
     {
         
-        Player player = new Player("Admin", 22, 2000);
+        Player player = new Player("Admin", 22, 2000, "hej");
         public List<PictureBox> playerPictures;
         public List<PictureBox> dealerPictures;
         public const string imagePath = @"Cards/";
@@ -22,14 +22,15 @@ namespace BlackjackWpf
         int bet = 0;
         public bool resetBtnClicked = false;
         public const string soundPath = @"SoundEffects/";
-
+        
         public Form1()
         {
+            
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.StartPosition = FormStartPosition.CenterScreen;
-
+            
             playerPictures = new List<PictureBox>();
             dealerPictures = new List<PictureBox>();
 
@@ -49,7 +50,9 @@ namespace BlackjackWpf
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            var startForm = new Form2();
+            
+            startForm.Show();
         }
 
         private void button1_Click(object sender, EventArgs e)

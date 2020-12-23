@@ -11,16 +11,18 @@ namespace BlackjackWpf.Model
         private string _name;
         private int _age;
         private double _wallet;
+        private string _pwd;
 
         public Player()
         {
 
         }
-        public Player(string _name, int _age, double _wallet)
+        public Player(string _name, int _age, double _wallet, string _pwd)
         {
             Name = _name;
             Age = _age;
             Wallet = _wallet;
+            Password = _pwd;
         }
 
         public string Name
@@ -39,6 +41,12 @@ namespace BlackjackWpf.Model
         {
             get { return _wallet; }
             set { _wallet = value; }
+        }
+
+        public string Password
+        {
+            get { return _pwd; }
+            set { _pwd = value; }
         }
     }
 }
