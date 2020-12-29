@@ -92,5 +92,23 @@ namespace BlackjackWpf.DAL
             }
             return null;
         }
+
+        public void UpdatePlayer(string playerName, double wallet)
+        {
+            
+                try
+                {
+                    SqlCommand comm = new SqlCommand();
+                    comm.Connection = DBConnection.GetConnection();
+                    comm.CommandText = "UPDATE Persons SET wallet = ('" + wallet + "')  WHERE name =('" + playerName + "')";
+                    comm.ExecuteNonQuery();
+                }
+                catch (SqlException e)
+                {
+                    
+
+                }
+            
+        }
     }
 }

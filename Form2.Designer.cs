@@ -143,9 +143,9 @@
             // 
             this.textBox5.Location = new System.Drawing.Point(232, 331);
             this.textBox5.Name = "textBox5";
+            this.textBox5.PasswordChar = '●';
             this.textBox5.Size = new System.Drawing.Size(148, 26);
             this.textBox5.TabIndex = 11;
-            this.textBox5.PasswordChar = '\u25CF';
             // 
             // label6
             // 
@@ -169,9 +169,9 @@
             // 
             this.textBox6.Location = new System.Drawing.Point(806, 157);
             this.textBox6.Name = "textBox6";
+            this.textBox6.PasswordChar = '●';
             this.textBox6.Size = new System.Drawing.Size(148, 26);
             this.textBox6.TabIndex = 14;
-            this.textBox6.PasswordChar = '\u25CF';
             // 
             // textBox7
             // 
@@ -179,7 +179,6 @@
             this.textBox7.Name = "textBox7";
             this.textBox7.Size = new System.Drawing.Size(308, 26);
             this.textBox7.TabIndex = 15;
-            
             // 
             // Form2
             // 
@@ -203,7 +202,7 @@
             this.Controls.Add(this.textBox1);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Form2";
-            this.Text = "Form2";
+            this.Text = "Login Page";
             this.Load += new System.EventHandler(this.Form2_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

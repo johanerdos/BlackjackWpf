@@ -1,6 +1,8 @@
-﻿using BlackjackWpf.Model;
+﻿using BlackjackWpf.DAL;
+using BlackjackWpf.Model;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
@@ -10,8 +12,9 @@ namespace BlackjackWpf
 {
     public partial class Form1 : Form
     {
+        PlayerDAL pd = new PlayerDAL();
         
-        Player player = new Player("Admin", 22, 2000, "hej");
+
         public List<PictureBox> playerPictures;
         public List<PictureBox> dealerPictures;
         public const string imagePath = @"Cards/";
@@ -22,8 +25,12 @@ namespace BlackjackWpf
         int bet = 0;
         public bool resetBtnClicked = false;
         public const string soundPath = @"SoundEffects/";
+        Player player = new Player();
+
+        DataTable dt = new DataTable();
         
-        public Form1()
+        
+        public Form1(string playerName)
         {
             
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
@@ -44,15 +51,33 @@ namespace BlackjackWpf
             //sp.Load();
             //sp.Play();
 
-
+            player = pd.FindPlayer(playerName);
+            
             InitializeComponent();
+
+            if (String.IsNullOrEmpty(betLabel.Text))
+            {
+                button1.Enabled = false;
+            }
+
+            button5.Enabled = false;
+            button6.Enabled = false;
+
+            dt.Columns.Add("Player Name");
+            dt.Columns.Add("Player Wallet");
+
+            DataRow dr = dt.NewRow();
+            dr["Player Name"] = player.Name;
+            dr["Player Wallet"] = player.Wallet;
+            dt.Rows.Add(dr);
+            dataGridView1.DataSource = dt;
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            var startForm = new Form2();
+            this.FormClosing += new FormClosingEventHandler(Form1_FormClosing);
             
-            startForm.Show();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -64,47 +89,76 @@ namespace BlackjackWpf
                 
                 Thread.Sleep(2000);
             }
+
+            if (String.IsNullOrEmpty(betLabel.Text))
+            {
+                button1.Enabled = false;
+            }
+            
             Card card = new Card();
-            Card c1 = card.PrintCard();
-            Card c2 = card.PrintCard();
-            Card c3 = card.PrintCard();
+            Card c1 = new Card("4", 4, "S");
+            Card c2 = new Card("5", 5, "D");
+            Card c3 = new Card("7", 7, "C");
             playerHand.Add(c1);
             playerHand.Add(c2);
             dealerHand.Add(c3);
-            CreatePlayerControls(playerHand);
+            int count = playerHand.Count;
+            CreatePlayerControls(playerHand, count);
             CreateDealerControls(dealerHand);
 
             DisplayPlayerControls();
             DisplayDealerControls();
 
-
+            button5.Enabled = true;
+            button6.Enabled = true;
         }
 
-        private void CreatePlayerControls(List<Card> playerHand)
+        private void CreatePlayerControls(List<Card> playerHand, int count)
         {
             
             int value = 0;
-            for (int i = 0; i < playerHand.Count; i++)
+            //Must be a better way of doing this but it'll do for now
+            if (count == 2)
             {
-                string cardRank = playerHand[playerHand.Count - 1].Rank;
-                string cardSuit = playerHand[playerHand.Count - 1].Suit;
+                for (int i = 0; i < playerHand.Count; i++)
+                {
+                    string cardRank = playerHand[i].Rank;
+                    string cardSuit = playerHand[i].Suit;
 
-                var newPictureBox = new PictureBox();
-                newPictureBox.Height = 110;
-                newPictureBox.Width = 100;
-                playerPictures.Add(SizeImage(newPictureBox, cardRank, cardSuit));
+                    var newPictureBox = new PictureBox();
+                    newPictureBox.Height = 110;
+                    newPictureBox.Width = 100;
+                    playerPictures.Add(SizeImage(newPictureBox, cardRank, cardSuit));
+                }
             }
+            else
+            {
+                for (int i = 0; i < playerHand.Count; i++)
+                {
+                    string cardRank = playerHand[playerHand.Count - 1].Rank;
+                    string cardSuit = playerHand[playerHand.Count - 1].Suit;
+
+                    var newPictureBox = new PictureBox();
+                    newPictureBox.Height = 110;
+                    newPictureBox.Width = 100;
+                    playerPictures.Add(SizeImage(newPictureBox, cardRank, cardSuit));
+                }
+            }
+            
+            
+            
+            
             foreach (Card c in playerHand)
             {
                 value += c.Value;
             }
             label1.Text = value.ToString();
-
+            
         }
 
         private void CreateDealerControls(List<Card> dealerHand)
         {
-   
+            int value = 0;
             for (int i = 0; i < dealerHand.Count; i++)
             {
                 string cardRank = dealerHand[dealerHand.Count - 1].Rank;
@@ -115,6 +169,11 @@ namespace BlackjackWpf
                 newPictureBox.Width = 100;
                 dealerPictures.Add(SizeImage(newPictureBox, cardRank, cardSuit));
             }
+            foreach(Card  c in dealerHand)
+            {
+                value += c.Value;
+            }
+            label2.Text = value.ToString();
             
         }
 
@@ -162,12 +221,14 @@ namespace BlackjackWpf
         private void Hit(object sender, EventArgs e)
         {
             //detta måste fixas
-            int value = playerHand[0].Value + playerHand[1].Value;
+            //int value = playerHand[0].Value + playerHand[1].Value;
+            int value = 0;
             Card card = new Card();
-            //Card c4 = new Card("4", 4, "S");
-            Card c4 = card.PrintCard();
+            Card c4 = new Card("8", 8, "S");
+            //Card c4 = card.PrintCard();
             playerHand.Add(c4);
-            CreatePlayerControls(playerHand);
+            int count = playerHand.Count;
+            CreatePlayerControls(playerHand, count);
             DisplayPlayerControls();
 
             foreach (Card c in playerHand)
@@ -177,6 +238,7 @@ namespace BlackjackWpf
             if(value > 21)
             {
                 Loser();
+                button5.Enabled = false;
             }
 
             label1.Text = value.ToString();
@@ -208,8 +270,10 @@ namespace BlackjackWpf
 
         private void Bet50(object sender, EventArgs e)
         {
+            
             bet += 50;
             betLabel.Text = bet.ToString();
+            button1.Enabled = true;
             
         }
 
@@ -217,12 +281,14 @@ namespace BlackjackWpf
         {
             bet += 100;
             betLabel.Text = bet.ToString();
+            button1.Enabled = true;
         }
 
         private void Bet20(object sender, EventArgs e)
         {
             bet += 20;
             betLabel.Text = bet.ToString();
+            button1.Enabled = true;
         }
 
         private void CheckScore()
@@ -273,24 +339,30 @@ namespace BlackjackWpf
         {
             resultLable.Text = "You got blackjack!";
             player.Wallet += bet + (bet / 2);
-            walletLbl.Text = player.Wallet.ToString();
-            bet = 0;
+            UpdateDT();
+            
+            button5.Enabled = false;
+            button6.Enabled = false;
         }
 
         private void Winner()
         {
             resultLable.Text = "Player wins";
-            player.Wallet += bet * 2;
-            walletLbl.Text = player.Wallet.ToString();
-            bet = 0;
+            player.Wallet += bet * 2; 
+            UpdateDT();
+            
+            button5.Enabled = false;
+            button6.Enabled = false;
         }
 
         private void Loser()
         {
             resultLable.Text = "Dealer wins";
             player.Wallet -= bet;
-            walletLbl.Text = player.Wallet.ToString();
-            bet = 0;
+            UpdateDT();
+            
+            button5.Enabled = false;
+            button6.Enabled = false;
         }
 
         private void ResetHand(List<Card> playerHand, List<Card> dealerHand, List<PictureBox> playerPictures, List<PictureBox> dealerPictures)
@@ -318,15 +390,17 @@ namespace BlackjackWpf
             label1.Text = "";
             resultLable.Text = "";
             label2.Text = "";
+            button5.Enabled = true;
+            button6.Enabled = true;
 
         }
 
         private int St(int dealerNumber)
         {
             dealerNumber = 0;
-            //Card c = new Card("8", 8, "S");
+            Card c = new Card("8", 8, "S");
             Card card = new Card();
-            Card c = card.PrintCard();
+            //Card c = card.PrintCard();
             dealerHand.Add(c);
             CreateDealerControls(dealerHand);
             Thread.Sleep(1000);
@@ -339,6 +413,28 @@ namespace BlackjackWpf
 
 
             return dealerNumber;
+        }
+        private void UpdateDT()
+        {
+            dt.Clear();
+            DataRow dr = dt.NewRow();
+            dr["Player Name"] = player.Name;
+            dr["Player Wallet"] = player.Wallet;
+            dt.Rows.Add(dr);
+            dataGridView1.DataSource = dt;
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (MessageBox.Show("Do you want to close this application?", "Exit", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.No)
+            {
+                e.Cancel = true;
+            }
+            else
+            {
+                pd.UpdatePlayer(player.Name, player.Wallet);
+                e.Cancel = false;
+            }
         }
     }
 }

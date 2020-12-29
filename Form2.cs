@@ -15,11 +15,11 @@ namespace BlackjackWpf
 {
     public partial class Form2 : Form
     {
-        public Form1 f1 = new Form1();
+        
         public Form2()
         {
-
-            f1.Hide();
+            
+            this.Hide();
             
             InitializeComponent();
         }
@@ -63,7 +63,7 @@ namespace BlackjackWpf
                 Player p = pd.LogInPlayer(name, pwd);
                 if(p != null)
                 {
-                    
+                    Form1 f1 = new Form1(textBox4.Text);
                     f1.Show();
                     
                     
