@@ -43,9 +43,9 @@ namespace BlackjackWpf.Model
             set { _suit = value; }
         }
 
-        public Card PrintCard()
+        public Card PrintCard(Random rand)
         {
-            Random rand = new Random();
+            //Random rand = new Random();
             string[] rank = new string[] { "A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2" };
             string[] suits = new string[] { "H", "C", "D", "S" };
 

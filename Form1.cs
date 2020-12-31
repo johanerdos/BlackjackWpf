@@ -13,7 +13,7 @@ namespace BlackjackWpf
     public partial class Form1 : Form
     {
         PlayerDAL pd = new PlayerDAL();
-        
+        private Random random = new Random();
 
         public List<PictureBox> playerPictures;
         public List<PictureBox> dealerPictures;
@@ -96,11 +96,14 @@ namespace BlackjackWpf
             }
             
             Card card = new Card();
-            Card c1 = new Card("4", 4, "S");
-            Card c2 = new Card("5", 5, "D");
-            Card c3 = new Card("7", 7, "C");
-            playerHand.Add(c1);
-            playerHand.Add(c2);
+            for(int i = 0; i < 2; i++)
+            {
+                
+                Card c1 = card.PrintCard(random);
+                playerHand.Add(c1);
+            }
+
+            Card c3 = card.PrintCard(random);
             dealerHand.Add(c3);
             int count = playerHand.Count;
             CreatePlayerControls(playerHand, count);
@@ -125,6 +128,7 @@ namespace BlackjackWpf
                     string cardRank = playerHand[i].Rank;
                     string cardSuit = playerHand[i].Suit;
 
+                    //need to fix better locations of the cards
                     var newPictureBox = new PictureBox();
                     newPictureBox.Height = 110;
                     newPictureBox.Width = 100;
@@ -398,9 +402,9 @@ namespace BlackjackWpf
         private int St(int dealerNumber)
         {
             dealerNumber = 0;
-            Card c = new Card("8", 8, "S");
+            
             Card card = new Card();
-            //Card c = card.PrintCard();
+            Card c = card.PrintCard(random);
             dealerHand.Add(c);
             CreateDealerControls(dealerHand);
             Thread.Sleep(1000);
